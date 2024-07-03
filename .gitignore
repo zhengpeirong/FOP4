@@ -3,6 +3,7 @@ venv3/
 mnexec
 .cache/
 *.log
+*.pcap
 *.pyc
 *~
 *.1
