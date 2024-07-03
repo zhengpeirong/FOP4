@@ -3,6 +3,7 @@ FROM ubuntu:bionic
 LABEL maintainer="Daniele Moro <daniele.moro@polimi.it>"
 
 RUN apt-get update && apt-get install -y \
+    lsb-release \
     net-tools \
     iputils-ping \
     iproute2 \
@@ -25,7 +26,8 @@ RUN apt-get update && apt-get install -y \
     sudo
 
 COPY ./installP4.sh .
-COPY ./startP4.sh .
+# COPY ./startP4.sh .
+RUN chmod +x ./installP4.sh
 RUN ./installP4.sh
 
 EXPOSE 9090/tcp
