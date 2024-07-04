@@ -1,6 +1,7 @@
 FROM centos:6
 MAINTAINER manuel.peuster@uni-paderborn.de
 
+RUN yum-config-manager --add-repo https://vault.centos.org/centos/6.10/os/x86_64/
 RUN yum update -y
 RUN yum install -y \
     net-tools \

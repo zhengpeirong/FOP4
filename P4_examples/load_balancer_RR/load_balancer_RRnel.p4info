@@ -1,0 +1,312 @@
+# proto-file: p4/config/v1/p4info.proto
+# proto-message: p4.config.v1.P4Info
+
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 47107330
+    name: "c_ingress.t_l2_fwd"
+    alias: "t_l2_fwd"
+  }
+  match_fields {
+    id: 1
+    name: "standard_metadata.ingress_port"
+    bitwidth: 9
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ethernet.dst_addr"
+    bitwidth: 48
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 3
+    name: "hdr.ethernet.src_addr"
+    bitwidth: 48
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 4
+    name: "hdr.ethernet.ether_type"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  action_refs {
+    id: 21615607
+  }
+  action_refs {
+    id: 33403148
+  }
+  action_refs {
+    id: 31750807
+  }
+  action_refs {
+    id: 21257015
+  }
+  direct_resource_ids: 320089525
+  size: 1024
+}
+tables {
+  preamble {
+    id: 36259753
+    name: "c_ingress.loadbalancer.http_load_balancer"
+    alias: "http_load_balancer"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.dst_addr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "meta.current_output"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  action_refs {
+    id: 22271087
+  }
+  action_refs {
+    id: 29418737
+  }
+  action_refs {
+    id: 21257015
+  }
+  direct_resource_ids: 326569460
+  size: 2
+}
+tables {
+  preamble {
+    id: 38843819
+    name: "c_ingress.loadbalancer.other_direction"
+    alias: "other_direction"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.src_addr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  action_refs {
+    id: 29418737
+  }
+  action_refs {
+    id: 27445692
+  }
+  action_refs {
+    id: 21257015
+    annotations: "@defaultonly"
+    scope: DEFAULT_ONLY
+  }
+  direct_resource_ids: 327105576
+  size: 1024
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 21615607
+    name: "c_ingress.set_out_port"
+    alias: "set_out_port"
+  }
+  params {
+    id: 1
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 33403148
+    name: "c_ingress.send_to_cpu"
+    alias: "send_to_cpu"
+  }
+}
+actions {
+  preamble {
+    id: 31750807
+    name: "c_ingress._drop"
+    alias: "c_ingress._drop"
+  }
+}
+actions {
+  preamble {
+    id: 25294482
+    name: "c_ingress.loadbalancer.hash_header"
+    alias: "hash_header"
+  }
+}
+actions {
+  preamble {
+    id: 29418737
+    name: "c_ingress.loadbalancer._drop"
+    alias: "loadbalancer._drop"
+  }
+}
+actions {
+  preamble {
+    id: 22271087
+    name: "c_ingress.loadbalancer.set_nhop"
+    alias: "set_nhop"
+  }
+  params {
+    id: 1
+    name: "nhop_dmac"
+    bitwidth: 48
+  }
+  params {
+    id: 2
+    name: "nhop_ipv4"
+    bitwidth: 32
+  }
+  params {
+    id: 3
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 27445692
+    name: "c_ingress.loadbalancer.substitute_src"
+    alias: "substitute_src"
+  }
+  params {
+    id: 1
+    name: "src_mac"
+    bitwidth: 48
+  }
+  params {
+    id: 2
+    name: "src_ipv4"
+    bitwidth: 32
+  }
+  params {
+    id: 3
+    name: "port"
+    bitwidth: 9
+  }
+}
+counters {
+  preamble {
+    id: 315831292
+    name: "c_ingress.tx_port_counter"
+    alias: "tx_port_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  size: 255
+}
+counters {
+  preamble {
+    id: 312989739
+    name: "c_ingress.rx_port_counter"
+    alias: "rx_port_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  size: 255
+}
+direct_counters {
+  preamble {
+    id: 320089525
+    name: "c_ingress.l2_fwd_counter"
+    alias: "l2_fwd_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 47107330
+}
+direct_counters {
+  preamble {
+    id: 326569460
+    name: "c_ingress.loadbalancer.http_load_balancer_counter"
+    alias: "http_load_balancer_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 36259753
+}
+direct_counters {
+  preamble {
+    id: 327105576
+    name: "c_ingress.loadbalancer.other_direction_counter"
+    alias: "other_direction_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 38843819
+}
+controller_packet_metadata {
+  preamble {
+    id: 81826293
+    name: "packet_in"
+    alias: "packet_in"
+    annotations: "@controller_header(\"packet_in\")"
+  }
+  metadata {
+    id: 1
+    name: "ingress_port"
+    bitwidth: 16
+  }
+}
+controller_packet_metadata {
+  preamble {
+    id: 76689799
+    name: "packet_out"
+    alias: "packet_out"
+    annotations: "@controller_header(\"packet_out\")"
+  }
+  metadata {
+    id: 1
+    name: "egress_port"
+    bitwidth: 16
+  }
+}
+registers {
+  preamble {
+    id: 385428705
+    name: "c_ingress.loadbalancer.load_balancer"
+    alias: "load_balancer"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 16
+      }
+    }
+  }
+  size: 1
+}
+registers {
+  preamble {
+    id: 370042079
+    name: "c_ingress.loadbalancer.state"
+    alias: "state"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 16
+      }
+    }
+  }
+  size: 16384
+}
+type_info {
+}

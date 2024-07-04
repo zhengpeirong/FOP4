@@ -1,0 +1,4 @@
+{
+    "vsc-webshark.sharkdFullPath": "/usr/bin/sharkd",
+    "vsc-webshark.tsharkFullPath": "/usr/bin/tshark"
+}

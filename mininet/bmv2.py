@@ -286,14 +286,21 @@ class ONOSBmv2Switch(Switch):
                 if self.json is not None:
                     if self.switch_config is not None:
                         # Switch initial configuration using Thrift CLI
+                        # try:
+                        #     with open(self.switch_config, mode='r') as f:
+                        #         # map(self.bmv2Thrift(), f.readlines())
+                        #         for cmd_row in f:
+                        #             self.bmv2Thrift(cmd_row)
+                        #     info("\nSwitch has been configured with %s configuration file" % self.switch_config)
+                        # except IOError:
+                        #     info("\nSwitch configuration file %s not found" % self.switch_config)
                         try:
-                            with open(self.switch_config, mode='r') as f:
-                                # map(self.bmv2Thrift(), f.readlines())
-                                for cmd_row in f:
-                                    self.bmv2Thrift(cmd_row)
-                            info("\nSwitch has been configured with %s configuration file" % self.switch_config)
+                            command = f"simple_switch_CLI --thrift-port {self.thriftPort} < {self.switch_config}"
+                            self.cmd(command)
+                            info(f"\nSwitch has been configured with {self.switch_config} configuration file")
                         except IOError:
-                            info("\nSwitch configuration file %s not found" % self.switch_config)
+                            info(f"\nSwitch configuration file {self.switch_config} not found")
+
                 if controllers is not None and len(controllers) > 0:
                     self.doOnosNetcfg(self.controllerIp(controllers))
                 else:

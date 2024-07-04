@@ -1,0 +1,144 @@
+# proto-file: p4/config/v1/p4info.proto
+# proto-message: p4.config.v1.P4Info
+
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 41683160
+    name: "MyIngress.smac"
+    alias: "smac"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ethernet.srcAddr"
+    bitwidth: 48
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20186621
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 256
+}
+tables {
+  preamble {
+    id: 44918510
+    name: "MyIngress.dmac"
+    alias: "dmac"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ethernet.dstAddr"
+    bitwidth: 48
+    match_type: EXACT
+  }
+  action_refs {
+    id: 29683729
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 256
+}
+tables {
+  preamble {
+    id: 39293585
+    name: "MyIngress.broadcast"
+    alias: "broadcast"
+  }
+  match_fields {
+    id: 1
+    name: "standard_metadata.ingress_port"
+    bitwidth: 9
+    match_type: EXACT
+  }
+  action_refs {
+    id: 24840994
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 256
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 20186621
+    name: "MyIngress.mac_learn"
+    alias: "mac_learn"
+  }
+}
+actions {
+  preamble {
+    id: 29683729
+    name: "MyIngress.forward"
+    alias: "forward"
+  }
+  params {
+    id: 1
+    name: "egress_port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 24840994
+    name: "MyIngress.set_mcast_grp"
+    alias: "set_mcast_grp"
+  }
+  params {
+    id: 1
+    name: "mcast_grp"
+    bitwidth: 16
+  }
+}
+digests {
+  preamble {
+    id: 398033514
+    name: "learn_t"
+    alias: "learn_t"
+  }
+  type_spec {
+    struct {
+      name: "learn_t"
+    }
+  }
+}
+type_info {
+  structs {
+    key: "learn_t"
+    value {
+      members {
+        name: "srcAddr"
+        type_spec {
+          bitstring {
+            bit {
+              bitwidth: 48
+            }
+          }
+        }
+      }
+      members {
+        name: "ingress_port"
+        type_spec {
+          bitstring {
+            bit {
+              bitwidth: 9
+            }
+          }
+        }
+      }
+    }
+  }
+}
